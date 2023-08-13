@@ -29,11 +29,22 @@ export const homeApi = createApi({
           body: { taskId },
         }),
       }),
+      setDone: builder.mutation({
+        query: (taskId) => ({
+          url: `check-done-task`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: taskId,
+        }),
+      }),
   }),
 });
 
 export const {
   useGetHomeDataQuery,
   useAddTaskMutation,
-  useRemoveTaskMutation
+  useRemoveTaskMutation,
+  useSetDoneMutation
 } = homeApi;
