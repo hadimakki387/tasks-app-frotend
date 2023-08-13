@@ -38,11 +38,13 @@ function Note({ task }: { task: any }) {
   const editTaskFunction = async (e: any, id: string) => {
     setIsEditing(false);
     editTask({data:e,id:id})
+    dispatch(incrementCounter());
   };
 
   const markTaskAsDone = (id: string) => {
     setDone({id})
     dispatch(incrementCounter());
+    
   };
 
   return (
