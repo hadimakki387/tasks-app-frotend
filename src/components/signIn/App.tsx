@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Link from "next/link";
+import { useSignInMutation } from "@/app/api/apiSlice";
 
 
 const validationSchema = yup.object({
@@ -17,6 +18,7 @@ const validationSchema = yup.object({
 
 function App() {
 
+  const [signIn,{data,isLoading,isSuccess,isError,error}] = useSignInMutation()
 
   const formik = useFormik({
     initialValues: {
@@ -25,7 +27,7 @@ function App() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values)
+      signIn(values)
     },
   });
   const { values, handleChange, handleBlur, handleSubmit, errors, touched } =
