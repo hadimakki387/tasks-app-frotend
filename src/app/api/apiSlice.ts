@@ -69,6 +69,9 @@ export const homeApi = createApi({
           body: taskId,
         }),
       }),
+      checkAuth: builder.query({
+        query: (token) => `auth?token=${token}`, 
+      }),
   }),
 });
 
