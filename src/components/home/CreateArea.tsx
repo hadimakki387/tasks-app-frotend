@@ -7,6 +7,7 @@ import Fab from "@mui/material/Fab";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { ClickAwayListener } from "@mui/base";
+import { useAddTaskMutation } from "@/app/api/apiSlice";
 
 const validationSchema = yup.object({
   title: yup.string().required("Title is required"),
@@ -15,6 +16,8 @@ const validationSchema = yup.object({
 });
 
 function CreateArea() {
+
+  const [addTask, { data, isLoading, error }] = useAddTaskMutation();
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -24,7 +27,7 @@ function CreateArea() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       formik.resetForm();
-      console.log(values);
+      addTask({values,userID:"12345"})
     },
   });
 

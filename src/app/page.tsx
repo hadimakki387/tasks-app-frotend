@@ -1,11 +1,12 @@
+'use client'
+
 import App from '@/components/home/App'
-import Image from 'next/image'
+import { ApiProvider } from "@reduxjs/toolkit/query/react";
+import { homeApi } from './api/apiSlice';
+
 
 export default function Home() {
   return (
-    
       <App/>
-    
-    
   )
 }
