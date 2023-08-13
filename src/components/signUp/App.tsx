@@ -29,14 +29,17 @@ function App() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values)
       signUp({values})
     },
   });
   const { values, handleChange, handleBlur, handleSubmit, errors, touched } =
     formik;
 
-  
+  useEffect(()=>{
+    if(data && isSuccess){
+      localStorage.setItem("jwt",data.token)
+    }
+  },[data,isSuccess,error])
 
   return (
     <div className="h-full flex flex-col justify-center items-center rounded-lg ">
