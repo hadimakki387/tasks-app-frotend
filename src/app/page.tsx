@@ -1,9 +1,18 @@
-import Image from 'next/image'
+'use client'
+
+import App from '@/components/home/App'
+import { ApiProvider } from "@reduxjs/toolkit/query/react";
+import { homeApi } from './api/apiSlice';
+import { store } from "@/app/store";
+import { Provider } from "react-redux";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      hello
-    </main>
+    <ApiProvider api={homeApi}>
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    </ApiProvider>
+      
   )
 }
