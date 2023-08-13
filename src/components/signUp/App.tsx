@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Link from "next/link";
+import { useSignUpMutation } from "@/app/api/apiSlice";
 
 
 const validationSchema = yup.object({
@@ -18,6 +19,7 @@ const validationSchema = yup.object({
 
 function App() {
 
+  const [signUp , {data,isLoading,isError,isSuccess,error}] = useSignUpMutation()
 
   const formik = useFormik({
     initialValues: {
