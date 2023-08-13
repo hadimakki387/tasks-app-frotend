@@ -6,13 +6,14 @@ import CheckIcon from "@mui/icons-material/Check";
 import Fab from "@mui/material/Fab";
 import { useDispatch, useSelector } from "react-redux";
 import TaskForm from "./TaskForm";
-import { useRemoveTaskMutation } from "@/app/api/apiSlice";
+import { useRemoveTaskMutation, useSetDoneMutation } from "@/app/api/apiSlice";
 import { incrementCounter } from "@/app/slices/tasksSlice";
 
 function Note({ task }: { task: any }) {
+  const dispatch = useDispatch();
+  const [removeTask, { isLoading, isError, data, error }] =useRemoveTaskMutation();
+  const [setDone, { data: editData, error: editError }] = useSetDoneMutation();
 
-  const dispatch = useDispatch()
-  const [removeTask,{data,isLoading,isError,error}] = useRemoveTaskMutation()
   const [isEditing, setIsEditing] = useState(false);
   const formatDate = (isoDate: string) => {
     const date = new Date(isoDate);
@@ -23,24 +24,22 @@ function Note({ task }: { task: any }) {
     });
   };
 
-  
-
   //here goes the editForm funtions
   const handleEditClick = () => {
     setIsEditing(true);
   };
   const deleteTask = async (id: string) => {
     setIsEditing(false);
-    removeTask({id})
-    dispatch(incrementCounter())
+    removeTask({ id });
+    dispatch(incrementCounter());
   };
   const editTaskFunction = async (e: any, id: string) => {
     setIsEditing(false);
-    
   };
 
   const markTaskAsDone = (id: string) => {
-   
+    setDone(id)
+    dispatch(incrementCounter());
   };
 
   return (
@@ -68,10 +67,16 @@ function Note({ task }: { task: any }) {
             due date: {formatDate(task.dueDate)}
           </p>
           <p className="text-sm text-gray-600">
-            {task.isDone ? <span className="flex items-center gap-4">Is Done <CheckIcon className="text-sm text-green-600 "/></span> : "Not Done"}
+            {task.isDone ? (
+              <span className="flex items-center gap-4">
+                Is Done <CheckIcon className="text-sm text-green-600 " />
+              </span>
+            ) : (
+              "Not Done"
+            )}
           </p>
           <div className="flex justify-between items-center mt-4">
-          <div>
+            <div>
               {!task.isDone && (
                 <Fab onClick={() => markTaskAsDone(task._id)}>
                   <CheckIcon />
@@ -87,7 +92,6 @@ function Note({ task }: { task: any }) {
                 <DeleteIcon />
               </Fab>
             </div>
-            
           </div>
         </>
       )}
