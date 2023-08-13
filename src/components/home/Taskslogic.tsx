@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Note from "./notes/Note";
 import { useGetHomeDataQuery } from "@/app/api/apiSlice";
-
+import { useDispatch, useSelector } from "react-redux";
+import { selectTasks, setTasks } from "@/app/slices/tasksSlice";
 function Taskslogic() {
+
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
   const [cat, setCat] = useState("All");
@@ -13,8 +15,18 @@ function Taskslogic() {
     cat,
     userID
   });
+  const dispatch = useDispatch();
+  const tasks = useSelector(selectTasks);
+  const counter = useSelector((state: any) => state.tasks.counter);
 
-  console.log(data)
+console.log(tasks)
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setTasks(data.paginatedTasks));
+    }
+  }, [data, dispatch]);
+  
   const handleCat = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCat(e.target.value);
   };
