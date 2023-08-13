@@ -20,7 +20,14 @@ function Taskslogic() {
   const tasks = useSelector(selectTasks);
   const counter = useSelector((state: any) => state.tasks.counter);
 
-console.log(tasks)
+  console.log(counter)
+
+useEffect(()=>{
+  setTimeout(()=>{
+      refetch()
+  }, 500)
+  refetch()
+},[counter,refetch])
 
   useEffect(() => {
     if (data) {
