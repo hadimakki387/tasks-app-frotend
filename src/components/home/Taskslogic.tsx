@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Note from "./notes/Note";
+import { useGetHomeDataQuery } from "@/app/api/apiSlice";
 
 function Taskslogic() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
   const [cat, setCat] = useState("All");
+  const userID = "1234"
+  const { data, isLoading, error, refetch } = useGetHomeDataQuery({
+    page,
+    limit,
+    cat,
+    userID
+  });
 
+  console.log(data)
   const handleCat = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCat(e.target.value);
   };
