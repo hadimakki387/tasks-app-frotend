@@ -39,6 +39,13 @@ function Taskslogic() {
     setCat(e.target.value);
   };
 
+  useEffect(()=>{
+    setTimeout(()=>{
+      refetch()
+    },500)
+    
+  },[cat])
+
   return (
     <>
       {!isLoading && (
