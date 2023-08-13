@@ -4,14 +4,13 @@ import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
 import Fab from "@mui/material/Fab";
-
-
 import { useDispatch, useSelector } from "react-redux";
-
 import TaskForm from "./TaskForm";
+import { useRemoveTaskMutation } from "@/app/api/apiSlice";
 
 function Note({ task }: { task: any }) {
 
+  const [removeTask,{data,isLoading,isError,error}] = useRemoveTaskMutation()
   const [isEditing, setIsEditing] = useState(false);
   const formatDate = (isoDate: string) => {
     const date = new Date(isoDate);
@@ -30,7 +29,7 @@ function Note({ task }: { task: any }) {
   };
   const deleteTask = async (id: string) => {
     setIsEditing(false);
-    
+    removeTask({id})
     
   };
   const editTaskFunction = async (e: any, id: string) => {
