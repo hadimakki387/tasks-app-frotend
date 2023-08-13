@@ -8,6 +8,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { ClickAwayListener } from "@mui/base";
 import { useAddTaskMutation } from "@/app/api/apiSlice";
+import { useDispatch } from "react-redux";
+import { incrementCounter } from "@/app/slices/tasksSlice";
 
 const validationSchema = yup.object({
   title: yup.string().required("Title is required"),
@@ -17,6 +19,7 @@ const validationSchema = yup.object({
 
 function CreateArea() {
 
+  const dispatch = useDispatch()
   const [addTask, { data, isLoading, error }] = useAddTaskMutation();
   const formik = useFormik({
     initialValues: {
@@ -28,6 +31,7 @@ function CreateArea() {
     onSubmit: (values) => {
       formik.resetForm();
       addTask({...values,taskOwner:"1234"})
+      dispatch(incrementCounter())
     },
   });
 
