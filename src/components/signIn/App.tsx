@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Link from "next/link";
 import { useSignInMutation } from "@/app/api/apiSlice";
+import { useRouter } from "next/navigation";
 
 
 const validationSchema = yup.object({
@@ -17,6 +18,8 @@ const validationSchema = yup.object({
 });
 
 function App() {
+
+  const router = useRouter()
 
   const [signIn,{data,isLoading,isSuccess,isError,error}] = useSignInMutation()
 
@@ -33,6 +36,12 @@ function App() {
   const { values, handleChange, handleBlur, handleSubmit, errors, touched } =
     formik;
 
+    useEffect(()=>{
+      if(data && !isError){
+        localStorage.setItem("jwt",data.token)
+        router.push("/")
+      }
+    },[data,isSuccess])
  
 
  
