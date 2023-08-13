@@ -38,7 +38,7 @@ function Note({ task }: { task: any }) {
   };
 
   const markTaskAsDone = (id: string) => {
-    setDone(id)
+    setDone({id})
     dispatch(incrementCounter());
   };
 
