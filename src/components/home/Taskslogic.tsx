@@ -3,6 +3,7 @@ import Note from "./notes/Note";
 import { useGetHomeDataQuery } from "@/app/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTasks, setTasks } from "@/app/slices/tasksSlice";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 function Taskslogic() {
 
   const [page, setPage] = useState(1);
@@ -30,15 +31,11 @@ console.log(tasks)
   const handleCat = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCat(e.target.value);
   };
-  const task = {
-    title: "go out",
-    description: "i want to go out today",
-    dueDate: "2023-08-24T00:00:00.000+00:00",
-  };
+ 
 
   return (
     <>
-      <div>
+    {!isLoading &&<div>
         <div className="w-[20%] mx-4">
           <label
             htmlFor="countries"
@@ -56,29 +53,35 @@ console.log(tasks)
             <option value="notDone">Not Done Tasks</option>
           </select>
         </div>
-        <div className="flex flex-wrap justify-start items-center w-full">
-          <div className="rounded-md w-1/4 p-4 max-[1520px]:w-1/3 max-[1000px]:w-1/2 max-[690px]:w-full">
-            <Note task={task} />
+        <TransitionGroup className="flex flex-wrap justify-start items-center w-full">
+            {tasks.map((task, index: number) => {
+              return (
+                <CSSTransition key={index} timeout={300} classNames="fade">
+                  <div
+                    className="rounded-md w-1/4 p-4 max-[1520px]:w-1/3 max-[1000px]:w-1/2 max-[690px]:w-full"
+                    key={index}
+                  >
+                    <Note task={task} />
+                  </div>
+                </CSSTransition>
+              );
+            })}
+          </TransitionGroup>
+          <div className={`min-[1520px]:absolute min-[1520px]:bottom-8 min-[1520px]:left-1/2 min-[1520px]:transform min-[1520px]:-translate-x-1/2 max-[1520px]:flex max-[1520px]:justify-center max-[1520px]:items-center max-[1520px]:my-8`}>
+            {Array.from({ length: data.totalPages }).map((_, index) => (
+              <button
+                key={index}
+                className={`px-4 py-2 rounded text-white font-semibold ${
+                  page === index + 1 && "bg-yellow-500"
+                }`}
+                onClick={() => setPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
-          <div className="rounded-md w-1/4 p-4 max-[1520px]:w-1/3 max-[1000px]:w-1/2 max-[690px]:w-full">
-            <Note task={task} />
-          </div>
-          <div className="rounded-md w-1/4 p-4 max-[1520px]:w-1/3 max-[1000px]:w-1/2 max-[690px]:w-full">
-            <Note task={task} />
-          </div>
-          <div className="rounded-md w-1/4 p-4 max-[1520px]:w-1/3 max-[1000px]:w-1/2 max-[690px]:w-full">
-            <Note task={task} />
-          </div>
-        </div>
-        <div className="min-[1520px]:absolute min-[1520px]:bottom-8 min-[1520px]:left-1/2 min-[1520px]:transform min-[1520px]:-translate-x-1/2 max-[1520px]:flex max-[1520px]:justify-center max-[1520px]:items-center max-[1520px]:my-8">
-          <button
-            className="px-4 py-2 rounded text-white font-semibold
-                  bg-yellow-500"
-          >
-            1
-          </button>
-        </div>
-      </div>
+      </div> }
+      
     </>
   );
 }
