@@ -82,5 +82,6 @@ export const {
   useSetDoneMutation,
   useEditTaskMutation,
   useSignUpMutation,
-  useSignInMutation
+  useSignInMutation,
+  useCheckAuthQuery
 } = homeApi;
