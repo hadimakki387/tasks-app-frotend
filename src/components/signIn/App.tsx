@@ -90,6 +90,12 @@ function App() {
           {touched.password && errors.password ? (
             <div className="text-red-500">{errors.password}</div>
           ) : null}
+          {error && "status" in error && error.status === 404 ? (
+            <div className="text-red-500">user not found</div>
+          ) : null}
+          {error && "status" in error && error.status === 400 ? (
+            <div className="text-red-500">invalid credentials</div>
+          ) : null}
         </div>
 
         <div className="flex flex-col gap-2 justify-center items-center">
