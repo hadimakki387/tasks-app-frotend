@@ -4,6 +4,8 @@ import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Link from "next/link";
+import { useSignInMutation } from "@/app/api/apiSlice";
+import { useRouter } from "next/navigation";
 
 
 const validationSchema = yup.object({
@@ -17,6 +19,9 @@ const validationSchema = yup.object({
 
 function App() {
 
+  const router = useRouter()
+
+  const [signIn,{data,isLoading,isSuccess,isError,error}] = useSignInMutation()
 
   const formik = useFormik({
     initialValues: {
@@ -25,12 +30,18 @@ function App() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values)
+      signIn(values)
     },
   });
   const { values, handleChange, handleBlur, handleSubmit, errors, touched } =
     formik;
 
+    useEffect(()=>{
+      if(data && !isError){
+        localStorage.setItem("jwt",data.token)
+        router.push("/")
+      }
+    },[data,isSuccess])
  
 
  
@@ -78,6 +89,12 @@ function App() {
           />
           {touched.password && errors.password ? (
             <div className="text-red-500">{errors.password}</div>
+          ) : null}
+          {error && "status" in error && error.status === 404 ? (
+            <div className="text-red-500">user not found</div>
+          ) : null}
+          {error && "status" in error && error.status === 400 ? (
+            <div className="text-red-500">invalid credentials</div>
           ) : null}
         </div>
 

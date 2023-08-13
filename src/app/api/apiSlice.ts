@@ -7,7 +7,7 @@ export const homeApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000/api/" }), // Adjust the baseUrl as needed
   endpoints: (builder) => ({
     getHomeData: builder.query({
-      query: ({page,limit,cat,userID}) => `home?page=${page}&limit=${limit}&cat=${cat}&userID=${userID}`, 
+      query: ({page,limit,cat,token}) => `home?page=${page}&limit=${limit}&cat=${cat}&userID=${token}`, 
     }),
     addTask: builder.mutation({
         query: (task) => ({
@@ -49,6 +49,29 @@ export const homeApi = createApi({
           body: taskId,
         }),
       }),
+      signUp: builder.mutation({
+        query: (user) => ({
+          url: `sign-up`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: user,
+        }),
+      }),
+      signIn: builder.mutation({
+        query: (taskId) => ({
+          url: `sign-in`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: taskId,
+        }),
+      }),
+      checkAuth: builder.query({
+        query: (token) => `auth?token=${token}`, 
+      }),
   }),
 });
 
@@ -57,5 +80,8 @@ export const {
   useAddTaskMutation,
   useRemoveTaskMutation,
   useSetDoneMutation,
-  useEditTaskMutation
+  useEditTaskMutation,
+  useSignUpMutation,
+  useSignInMutation,
+  useCheckAuthQuery
 } = homeApi;

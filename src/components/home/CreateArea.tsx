@@ -19,6 +19,7 @@ const validationSchema = yup.object({
 
 function CreateArea() {
 
+  const token = localStorage.getItem("jwt")
   const dispatch = useDispatch()
   const [addTask, { data, isLoading, error }] = useAddTaskMutation();
   const formik = useFormik({
@@ -30,7 +31,7 @@ function CreateArea() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       formik.resetForm();
-      addTask({...values,taskOwner:"1234"})
+      addTask({...values,token:token})
       dispatch(incrementCounter())
     },
   });

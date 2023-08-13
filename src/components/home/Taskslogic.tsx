@@ -8,12 +8,12 @@ function Taskslogic() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
   const [cat, setCat] = useState("All");
-  const userID = "1234";
+  const token = localStorage.getItem("jwt");
   const { data, isLoading, error, refetch } = useGetHomeDataQuery({
     page,
     limit,
     cat,
-    userID,
+    token,
   });
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasks);
