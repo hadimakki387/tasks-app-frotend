@@ -19,10 +19,43 @@ export const homeApi = createApi({
           body: task,
         }),
       }),
+      removeTask: builder.mutation({
+        query: (taskId) => ({
+          url: `remove-task`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: { taskId },
+        }),
+      }),
+      setDone: builder.mutation({
+        query: (taskId) => ({
+          url: `check-done-task`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: taskId,
+        }),
+      }),
+      editTask: builder.mutation({
+        query: (taskId) => ({
+          url: `edit-task`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: taskId,
+        }),
+      }),
   }),
 });
 
 export const {
   useGetHomeDataQuery,
-  useAddTaskMutation
+  useAddTaskMutation,
+  useRemoveTaskMutation,
+  useSetDoneMutation,
+  useEditTaskMutation
 } = homeApi;
