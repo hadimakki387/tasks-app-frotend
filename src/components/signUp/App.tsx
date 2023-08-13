@@ -4,7 +4,8 @@ import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Link from "next/link";
-
+import { useSignUpMutation } from "@/app/api/apiSlice";
+import {useRouter} from "next/navigation"
 
 const validationSchema = yup.object({
   name: yup.string().required("Name is required"),
@@ -17,7 +18,8 @@ const validationSchema = yup.object({
 });
 
 function App() {
-
+  const router = useRouter()
+  const [signUp , {data,isLoading,isError,isSuccess,error}] = useSignUpMutation()
 
   const formik = useFormik({
     initialValues: {
@@ -27,13 +29,19 @@ function App() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values)
+      signUp({values})
+      router.push("/")
     },
   });
   const { values, handleChange, handleBlur, handleSubmit, errors, touched } =
     formik;
 
-  
+  useEffect(()=>{
+    if(data && isSuccess){
+      localStorage.setItem("jwt",data.token)
+
+    }
+  },[data,isSuccess,error])
 
   return (
     <div className="h-full flex flex-col justify-center items-center rounded-lg ">
