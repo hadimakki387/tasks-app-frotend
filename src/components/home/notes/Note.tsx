@@ -7,9 +7,11 @@ import Fab from "@mui/material/Fab";
 import { useDispatch, useSelector } from "react-redux";
 import TaskForm from "./TaskForm";
 import { useRemoveTaskMutation } from "@/app/api/apiSlice";
+import { incrementCounter } from "@/app/slices/tasksSlice";
 
 function Note({ task }: { task: any }) {
 
+  const dispatch = useDispatch()
   const [removeTask,{data,isLoading,isError,error}] = useRemoveTaskMutation()
   const [isEditing, setIsEditing] = useState(false);
   const formatDate = (isoDate: string) => {
@@ -30,7 +32,7 @@ function Note({ task }: { task: any }) {
   const deleteTask = async (id: string) => {
     setIsEditing(false);
     removeTask({id})
-    
+    dispatch(incrementCounter())
   };
   const editTaskFunction = async (e: any, id: string) => {
     setIsEditing(false);
