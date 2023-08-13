@@ -27,7 +27,7 @@ function CreateArea() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       formik.resetForm();
-      addTask({values,userID:"12345"})
+      addTask({...values,taskOwner:"1234"})
     },
   });
 

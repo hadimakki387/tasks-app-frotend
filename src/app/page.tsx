@@ -7,6 +7,9 @@ import { homeApi } from './api/apiSlice';
 
 export default function Home() {
   return (
+    <ApiProvider api={homeApi}>
       <App/>
+    </ApiProvider>
+      
   )
 }
