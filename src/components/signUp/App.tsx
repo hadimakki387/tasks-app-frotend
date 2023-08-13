@@ -30,6 +30,7 @@ function App() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values)
+      signUp({values})
     },
   });
   const { values, handleChange, handleBlur, handleSubmit, errors, touched } =
