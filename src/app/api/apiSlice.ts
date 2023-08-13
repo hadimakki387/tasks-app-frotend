@@ -7,7 +7,7 @@ export const homeApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000/api/" }), // Adjust the baseUrl as needed
   endpoints: (builder) => ({
     getHomeData: builder.query({
-      query: ({page,limit,cat,userID}) => `home?page=${page}&limit=${limit}&cat=${cat}&userID=${userID}`, 
+      query: ({page,limit,cat,token}) => `home?page=${page}&limit=${limit}&cat=${cat}&userID=${token}`, 
     }),
     addTask: builder.mutation({
         query: (task) => ({
