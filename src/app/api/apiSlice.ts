@@ -39,6 +39,16 @@ export const homeApi = createApi({
           body: taskId,
         }),
       }),
+      editTask: builder.mutation({
+        query: (taskId) => ({
+          url: `edit-task`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: taskId,
+        }),
+      }),
   }),
 });
 
@@ -46,5 +56,6 @@ export const {
   useGetHomeDataQuery,
   useAddTaskMutation,
   useRemoveTaskMutation,
-  useSetDoneMutation
+  useSetDoneMutation,
+  useEditTaskMutation
 } = homeApi;
