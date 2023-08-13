@@ -49,15 +49,14 @@ function Taskslogic() {
             <Note task={task} />
           </div>
         </div>
-     <div className="min-[1520px]:absolute min-[1520px]:bottom-8 min-[1520px]:left-1/2 min-[1520px]:transform min-[1520px]:-translate-x-1/2 max-[1520px]:flex max-[1520px]:justify-center max-[1520px]:items-center max-[1520px]:my-8">
-      <button
-          className="px-4 py-2 rounded text-white font-semibold
+        <div className="min-[1520px]:absolute min-[1520px]:bottom-8 min-[1520px]:left-1/2 min-[1520px]:transform min-[1520px]:-translate-x-1/2 max-[1520px]:flex max-[1520px]:justify-center max-[1520px]:items-center max-[1520px]:my-8">
+          <button
+            className="px-4 py-2 rounded text-white font-semibold
                   bg-yellow-500"
-        >
-          1
-        </button>
-    </div>
-        
+          >
+            1
+          </button>
+        </div>
       </div>
     </>
   );

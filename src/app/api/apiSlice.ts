@@ -9,15 +9,20 @@ export const homeApi = createApi({
     getHomeData: builder.query({
       query: ({page,limit,cat}) => `home?page=${page}&limit=${limit}&cat=${cat}`, // This should match the route on your server
     }),
-    
-    
-    
-    
-    
-   
+    addTask: builder.mutation({
+        query: ({task,userId}) => ({
+          url: `add-task`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: {task,userId},
+        }),
+      }),
   }),
 });
 
 export const {
   useGetHomeDataQuery,
+  useAddTaskMutation
 } = homeApi;
