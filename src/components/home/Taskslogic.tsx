@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Note from "./notes/Note";
 
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-
 function Taskslogic() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(12);
