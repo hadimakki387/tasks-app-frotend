@@ -49,6 +49,16 @@ export const homeApi = createApi({
           body: taskId,
         }),
       }),
+      signUp: builder.mutation({
+        query: (user) => ({
+          url: `sign-up`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: user,
+        }),
+      }),
   }),
 });
 
@@ -57,5 +67,6 @@ export const {
   useAddTaskMutation,
   useRemoveTaskMutation,
   useSetDoneMutation,
-  useEditTaskMutation
+  useEditTaskMutation,
+  useSignUpMutation
 } = homeApi;
