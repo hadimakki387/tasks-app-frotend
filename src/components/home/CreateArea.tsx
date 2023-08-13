@@ -8,8 +8,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { ClickAwayListener } from "@mui/base";
 import { useAddTaskMutation } from "@/app/api/apiSlice";
-import { useDispatch } from "react-redux";
-import { incrementCounter } from "@/app/slices/tasksSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { incrementCounter, setExpand } from "@/app/slices/tasksSlice";
 
 const validationSchema = yup.object({
   title: yup.string().required("Title is required"),
@@ -19,6 +19,7 @@ const validationSchema = yup.object({
 
 function CreateArea() {
 
+  const isExpanded = useSelector((state:any)=>state.tasks.expanded)
   const token = localStorage.getItem("jwt")
   const dispatch = useDispatch()
   const [addTask, { data, isLoading, error }] = useAddTaskMutation();
@@ -30,20 +31,21 @@ function CreateArea() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      
+      dispatch(setExpand(false))
       formik.resetForm();
       addTask({...values,token:token})
       dispatch(incrementCounter())
     },
   });
-
-  const [isExpanded, setExpanded] = useState(false);
+ 
   const { values, handleChange, handleSubmit, errors, touched } = formik;
 
   return (
     <div className="flex justify-center items-center rounded-md ">
       <ClickAwayListener
         onClickAway={() => {
-          setExpanded(false);
+          dispatch(setExpand(false))
         }}
       >
         <form onSubmit={handleSubmit} className=" mt-4 relative rounded-md">
@@ -52,7 +54,7 @@ function CreateArea() {
             value={values.title}
             onChange={handleChange}
             onClick={() => {
-              setExpanded(true);
+              dispatch(setExpand(true))
             }}
             placeholder="Title"
             className={`w-full border-none p-4 outline-none text-xl resize-none rounded-t-md ${

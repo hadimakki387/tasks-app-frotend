@@ -18,6 +18,9 @@ function Taskslogic() {
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasks);
   const counter = useSelector((state: any) => state.tasks.counter);
+  const Expanded = useSelector((state: any) => state.tasks.expanded);
+
+  console.log(Expanded);
 
   useEffect(() => {
     setTimeout(() => {
@@ -35,6 +38,13 @@ function Taskslogic() {
   const handleCat = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCat(e.target.value);
   };
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      refetch()
+    },500)
+    
+  },[cat])
 
   return (
     <>
@@ -72,7 +82,11 @@ function Taskslogic() {
             })}
           </TransitionGroup>
           <div
-            className={`min-[1520px]:absolute min-[1520px]:bottom-8 min-[1520px]:left-1/2 min-[1520px]:transform min-[1520px]:-translate-x-1/2 max-[1520px]:flex max-[1520px]:justify-center max-[1520px]:items-center max-[1520px]:my-8`}
+            className={`${
+              !Expanded
+                ? "min-[1520px]:absolute min-[1520px]:bottom-8 min-[1520px]:left-1/2 min-[1520px]:transform min-[1520px]:-translate-x-1/2 max-[1520px]:flex max-[1520px]:justify-center max-[1520px]:items-center max-[1520px]:my-8"
+                : "flex justify-center items-center my-8"
+            }`}
           >
             {Array.from({ length: data.totalPages }).map((_, index) => (
               <button
