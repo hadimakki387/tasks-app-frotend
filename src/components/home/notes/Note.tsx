@@ -6,13 +6,15 @@ import CheckIcon from "@mui/icons-material/Check";
 import Fab from "@mui/material/Fab";
 import { useDispatch, useSelector } from "react-redux";
 import TaskForm from "./TaskForm";
-import { useRemoveTaskMutation, useSetDoneMutation } from "@/app/api/apiSlice";
+import { useEditTaskMutation, useRemoveTaskMutation, useSetDoneMutation } from "@/app/api/apiSlice";
 import { incrementCounter } from "@/app/slices/tasksSlice";
 
 function Note({ task }: { task: any }) {
   const dispatch = useDispatch();
   const [removeTask, { isLoading, isError, data, error }] =useRemoveTaskMutation();
   const [setDone, { data: editData, error: editError }] = useSetDoneMutation();
+  const [editTask, { data: checkData, error: checkError }] =
+    useEditTaskMutation();
 
   const [isEditing, setIsEditing] = useState(false);
   const formatDate = (isoDate: string) => {
@@ -35,6 +37,7 @@ function Note({ task }: { task: any }) {
   };
   const editTaskFunction = async (e: any, id: string) => {
     setIsEditing(false);
+    editTask({data:e,id:id})
   };
 
   const markTaskAsDone = (id: string) => {
